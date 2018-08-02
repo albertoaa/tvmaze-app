@@ -19,12 +19,15 @@ export default class SearchBar extends React.Component {
   render() {
     return (
       <View style={styles.searchBar}>
-        <TextInput 
-          onChangeText={(searchTerm) => this.setState({ searchTerm })}
+        <TextInput
+          onChangeText={searchTerm => this.setState({ searchTerm })}
           value={this.state.searchTerm}
           style={styles.searchInput}
         />
-        <TouchableOpacity style={styles.searchButton}>
+        <TouchableOpacity
+          style={styles.searchButton}
+          onPress={() => this.props.searchShow(this.state.searchTerm)}
+        >
           <FontAwesome name="search" size={18} color="#000" />
         </TouchableOpacity>
       </View>
