@@ -38,13 +38,16 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width - 20,
     borderWidth: 1,
     borderColor: "#DDD",
-    flexDirection: 'row'
+    flexDirection: "row",
+    borderRadius: 10
   },
   searchButton: {
     flex: 1,
     alignItems: "center",
     backgroundColor: "#DDDDDD",
-    padding: 10
+    padding: 10,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10
   },
   searchInput: {
     flex: 9
