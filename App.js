@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import SearchBar from './components/SeachBar/SearchBar';
+import ShowsList from './components/ShowsList/ShowsList';
 import * as urls from './constants/api';
 
 export default class App extends React.Component {
@@ -9,9 +10,6 @@ export default class App extends React.Component {
     this.state = {
       shows: [],
     }
-  }
-
-  componentDidMount() {
   }
 
   searchShow = (searchTerm) => {
@@ -26,12 +24,12 @@ export default class App extends React.Component {
       response.json().then((data) => this.setState({ shows: data }));
     }).catch((error) => console.log(error))
   }
-  
+
   render() {
-    console.log(this.state);
     return (
       <View style={styles.container}>
         <SearchBar searchShow = { (searchTerm) => this.searchShow(searchTerm) }/>
+        <ShowsList shows = {this.state.shows}/>
       </View>
     );
   }
