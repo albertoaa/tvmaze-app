@@ -1,5 +1,15 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+    "name": "TV Maze App",
+    "icon": "./assets/img/tvmaze-logo.png",
+    "version": "0.1.0",
+    "slug": "tvmaze-app",
+    "sdkVersion": "27.0.0",
+    "ios": {
+      "bundleIdentifier": "com.tvmaze.app"
+    },
+    "android": {
+      "package": "com.tvmaze.app"
+    }
   }
 }
