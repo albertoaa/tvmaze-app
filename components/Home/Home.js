@@ -51,8 +51,8 @@ export default class Home extends React.Component {
       .catch(error => console.log(error));
   }
 
-  showDetails = () => {
-    this.props.navigation.navigate('ShowDetails');
+  showDetails = (show) => {
+    this.props.navigation.navigate("ShowDetails", {show});
   }
 
   componentDidMount() {
@@ -65,7 +65,7 @@ export default class Home extends React.Component {
         <SearchBar searchShow={(searchTerm) => this.searchShow(searchTerm)} />
         <ShowsList 
           shows={this.state.shows} 
-          showDetails ={() => this.showDetails()} 
+          showDetails ={(show) => this.showDetails(show)} 
         />
       </View>
     );

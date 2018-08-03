@@ -10,53 +10,171 @@ import {
   View
 } from "react-native";
 
+import * as urls from '../../constants/api';
+
 import { FontAwesome } from "@expo/vector-icons";
 
 export default class ShowDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      seasons: [],
+      allEpisodes: []
     };
   }
 
+  strip_html_tags = str => {
+    if (str === null || str === "") return false;
+    else str = str.toString();
+    return str.replace(/<[^>]*>/g, "");
+  };
+
+  allSeasons = (showId) => {
+    let allSeasonsURL = urls.BASE_URL + '/shows/' + showId + '/seasons';
+    fetch(allSeasonsURL, {
+      methods: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        response.json().then(data => {
+          console.log(data);
+          this.setState({seasons: data})
+        });
+      })
+      .catch(error => console.log(error));
+  }
+
+  allEpisodes = (seasonId) => {
+    let allEpisodesURL = urls.BASE_URL + '/shows/' + seasonId + '/episodes';
+    fetch(allEpisodesURL, {
+      methods: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        response.json().then(data => {
+          this.setState({allEpisodes: data});
+        });
+      })
+      .catch(error => console.log(error));
+  }
+
+  renderEpisode = (seasonNumber, episode) => {
+    if (seasonNumber === episode.season) {
+      return <Text>{episode.name}</Text>
+    }
+  }
+
+  componentDidMount() {
+    this.allEpisodes(this.props.navigation.state.params.show.id);
+  }
+
   render() {
-    return (
-      <View>
-        <Text></Text>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Home')}
-        >
-          <Text>Atras</Text>
-        </TouchableOpacity>
-      </View>
-    );
+    console.log(this.state);
+    let show = this.props.navigation.state.params.show;
+    console.log(show);
+    return <View style={styles.detailsContainer}>
+        <View style={styles.details}>
+          <Image style={styles.showImage} source={{ uri: show.image.medium }} />
+          <View style={styles.info}>
+            <Text>{show.name}</Text>
+            <Text>
+              {show.schedule.days.join(" ")} - {show.schedule.time}
+            </Text>
+            <Text>{show.genres.join(", ")}</Text>
+          </View>
+        </View>
+        <View style={styles.sinopsis}>
+          <Text>Sinopsis:</Text>
+          <Text>{this.strip_html_tags(show.summary)}</Text>
+        </View>
+        <ScrollView style={styles.seasons}>
+          { 
+            this.state.allEpisodes.map((episode) => {
+              return (
+              <TouchableOpacity key={episode.id} style={styles.episodeContainer}>
+                  <Text>
+                    Temporada {episode.season} - E{episode.number}: {episode.name}
+                  </Text>
+                  <FontAwesome name="chevron-right" size={20} color="#000" />
+                </TouchableOpacity>
+              );
+            })
+          }
+        </ScrollView>
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate("Home")}>
+            <FontAwesome name="chevron-left" size={20} color="#000" />
+            <Text style={styles.buttonText}>Atrás</Text>
+          </TouchableOpacity>
+        </View>
+      </View>;
   }
 }
 
 const styles = StyleSheet.create({
-  showsList: {
-    flex: 1,
-    width: Dimensions.get("window").width - 20,
-    paddingVertical: 20
+  detailsContainer: {
+    flex: 1
   },
-  showItem: {
-    display: "flex",
+  details: {
     flexDirection: "row",
-    backgroundColor: "rgba(221,221,221, 0.4)",
-    marginVertical: 5,
     alignItems: "center",
     justifyContent: "space-between",
-    borderRadius: 10
+    paddingHorizontal: 20
   },
   showImage: {
-    width: 70,
-    height: 70
+    width: 100,
+    height: 100
   },
-  showDescription: {
-    width: 200,
-    height: 40
+  info: {
+    height: 100,
+    alignItems: "flex-start",
+    justifyContent: "space-around"
   },
   showViewIcon: {
     padding: 10
+  },
+  sinopsis: {
+    padding: 20
+  },
+  seasons: {
+    flex: 1,
+    margin: 20
+  },
+  buttonContainer: {
+    alignItems: "center"
+  },
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    width: Dimensions.get("window").width - 40,
+    backgroundColor: "#ddd"
+  },
+  buttonText: {
+    textAlign: "center",
+    padding: 10,
+    fontSize: 20
+  },
+  seasonImage: {
+    width: 40,
+    height: 40
+  },
+  episodeContainer: {
+    flexDirection: "row",
+    padding: 5,
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginVertical: 5,
+    backgroundColor: "rgba(245, 245, 244, 0.5)",
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 5
   }
 });

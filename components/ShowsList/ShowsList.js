@@ -18,7 +18,7 @@ export default class ShowsList extends React.Component {
             <TouchableOpacity 
               key={show.id} 
               style={styles.showItem}
-              onPress = {() => this.props.showDetails()}
+              onPress = {() => this.props.showDetails(show)}
             >
               <Image
                 style={styles.showImage}
