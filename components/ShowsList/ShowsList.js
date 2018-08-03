@@ -11,7 +11,6 @@ export default class ShowsList extends React.Component {
   }
 
   render() {
-    console.log(this.props.shows);
     return (
       <ScrollView style={styles.showsList}>
         {this.props.shows.map((show) => {
@@ -19,6 +18,7 @@ export default class ShowsList extends React.Component {
             <TouchableOpacity 
               key={show.id} 
               style={styles.showItem}
+              onPress = {() => this.props.showDetails()}
             >
               <Image
                 style={styles.showImage}

@@ -1,65 +1,20 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import SearchBar from './components/SeachBar/SearchBar';
-import ShowsList from './components/ShowsList/ShowsList';
-import * as urls from './constants/api';
+import Home from './components/Home/Home';
+import ShowDetails from './components/ShowDetails/ShowDetails';
+import { createSwitchNavigator } from "react-navigation";
+
+const MainNavigator = createSwitchNavigator({
+  Home: { screen: Home },
+  ShowDetails: { screen: ShowDetails },
+  initialRouteName: "Home",
+});
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      shows: [],
-    }
-  }
-
-  searchShow = (searchTerm) => {
-    if (searchTerm === '') {
-      this.searchAllShows();
-    } else {
-      let searchURL = urls.BASE_URL + urls.SEARCH_SHOW + searchTerm;
-      fetch(searchURL, {
-        methods: 'GET',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      })
-        .then(response => {
-          response.json().then(data => {
-            let shows = [];
-            data.map((show) => {
-              shows.push(show.show);
-            });
-            this.setState({ shows })
-          });
-        }).catch((error) => console.log(error))
-    }
-  }
-
-  searchAllShows = () => {
-    let searchURL = urls.BASE_URL + urls.ALL_SHOWS;
-    fetch(searchURL, {
-      methods: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      }
-    })
-      .then(response => {
-        response.json().then(data => this.setState({ shows: data }));
-      })
-      .catch(error => console.log(error));
-  }
-
-  componentDidMount() {
-    this.searchAllShows();
-  }
-
   render() {
     return (
       <View style={styles.container}>
-        <SearchBar searchShow = { (searchTerm) => this.searchShow(searchTerm) }/>
-        <ShowsList shows = {this.state.shows}/>
+        <MainNavigator/>
       </View>
     );
   }
