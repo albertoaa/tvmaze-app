@@ -2,12 +2,14 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Home from './components/Home/Home';
 import ShowDetails from './components/ShowDetails/ShowDetails';
+import EpisodeDetails from './components/EpisodeDetails/EpisodeDetails';
 import { createSwitchNavigator } from "react-navigation";
 
 const MainNavigator = createSwitchNavigator({
   Home: { screen: Home },
   ShowDetails: { screen: ShowDetails },
-  initialRouteName: "Home",
+  EpisodeDetails: { screen: EpisodeDetails },
+  initialRouteName: "Home"
 });
 
 export default class App extends React.Component {

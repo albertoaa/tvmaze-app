@@ -10,6 +10,12 @@ export default class ShowsList extends React.Component {
     };
   }
 
+  renderImage = (show) => {
+    if (show.image !== null) {
+      return <Image style={styles.showImage} source={{ uri: show.image.medium }} />;
+    }
+  }
+
   render() {
     return (
       <ScrollView style={styles.showsList}>
@@ -20,10 +26,7 @@ export default class ShowsList extends React.Component {
               style={styles.showItem}
               onPress = {() => this.props.showDetails(show)}
             >
-              <Image
-                style={styles.showImage}
-                source={{ uri: show.image.medium}}
-              />
+              {this.renderImage(show)}
               <View style={styles.showDescription}>
                 <Text>{show.name}</Text>
                 <Text>{show.genres}</Text>

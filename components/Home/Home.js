@@ -16,7 +16,8 @@ export default class Home extends React.Component {
     if (searchTerm === '') {
       this.searchAllShows();
     } else {
-      let searchURL = urls.BASE_URL + urls.SEARCH_SHOW + searchTerm;
+      let searchURL = urls.BASE_URL + urls.SEARCH_SHOW + encodeURIComponent(searchTerm.trim());
+      console.log(searchURL);
       fetch(searchURL, {
         methods: 'GET',
         headers: {

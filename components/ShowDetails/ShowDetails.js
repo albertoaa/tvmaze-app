@@ -70,17 +70,21 @@ export default class ShowDetails extends React.Component {
     }
   }
 
+  renderImage = (show) => {
+    if (show.image !== null) {
+      return <Image style={styles.showImage} source={{ uri: show.image.medium }} />;
+    }
+  }
+
   componentDidMount() {
     this.allEpisodes(this.props.navigation.state.params.show.id);
   }
 
   render() {
-    console.log(this.state);
     let show = this.props.navigation.state.params.show;
-    console.log(show);
     return <View style={styles.detailsContainer}>
         <View style={styles.details}>
-          <Image style={styles.showImage} source={{ uri: show.image.medium }} />
+          {this.renderImage(show)}
           <View style={styles.info}>
             <Text>{show.name}</Text>
             <Text>
@@ -90,14 +94,20 @@ export default class ShowDetails extends React.Component {
           </View>
         </View>
         <View style={styles.sinopsis}>
-          <Text>Sinopsis:</Text>
-          <Text>{this.strip_html_tags(show.summary)}</Text>
+          <ScrollView>
+            <Text>Sinopsis:</Text>
+            <Text>{this.strip_html_tags(show.summary)}</Text>
+          </ScrollView>  
         </View>
         <ScrollView style={styles.seasons}>
           { 
             this.state.allEpisodes.map((episode) => {
               return (
-              <TouchableOpacity key={episode.id} style={styles.episodeContainer}>
+              <TouchableOpacity 
+                key={episode.id} 
+                style={styles.episodeContainer}
+                  onPress={() => this.props.navigation.navigate("EpisodeDetails", { show, episode })}
+              >
                   <Text>
                     Temporada {episode.season} - E{episode.number}: {episode.name}
                   </Text>
@@ -120,13 +130,13 @@ export default class ShowDetails extends React.Component {
 
 const styles = StyleSheet.create({
   detailsContainer: {
-    flex: 1
+    flex: 1,
+    marginHorizontal: 20
   },
   details: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 20
   },
   showImage: {
     width: 100,
@@ -141,11 +151,11 @@ const styles = StyleSheet.create({
     padding: 10
   },
   sinopsis: {
-    padding: 20
+    height: 150,
   },
   seasons: {
     flex: 1,
-    margin: 20
+    marginVertical: 20
   },
   buttonContainer: {
     alignItems: "center"
