@@ -1,13 +1,7 @@
-import React from "react";
-import {
-  Dimensions,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  View
-} from "react-native";
-
 import { FontAwesome } from "@expo/vector-icons";
+import React from "react";
+import { Dimensions, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+
 
 export default class SearchBar extends React.Component {
   constructor(props) {

@@ -1,16 +1,7 @@
-import React from "react";
-import {
-  Dimensions,
-  Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  View
-} from "react-native";
-
 import { FontAwesome } from "@expo/vector-icons";
+import React from "react";
+import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+
 
 export default class ShowsList extends React.Component {
   constructor(props) {
@@ -57,17 +48,17 @@ const styles = StyleSheet.create({
     paddingVertical: 20
   },
   showItem: {
-    display: 'flex',
-    flexDirection: 'row',
-    backgroundColor: '#ddd',
+    display: "flex",
+    flexDirection: "row",
+    backgroundColor: "rgba(221,221,221, 0.4)",
     marginVertical: 5,
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    alignItems: "center",
+    justifyContent: "space-between",
     borderRadius: 10
   },
   showImage: {
     width: 70,
-    height: 70,
+    height: 70
   },
   showDescription: {
     width: 200,
