@@ -1,2 +1,3 @@
 export const BASE_URL = "http://api.tvmaze.com";
-export const SEARCH_SHOW = "/shows?q=";
+export const ALL_SHOWS = "/shows";
+export const SEARCH_SHOW = "/search/shows?q=";

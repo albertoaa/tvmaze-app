@@ -23,12 +23,16 @@ export default class SearchBar extends React.Component {
           onChangeText={searchTerm => this.setState({ searchTerm })}
           value={this.state.searchTerm}
           style={styles.searchInput}
+          autoCapitalize='none'
         />
         <TouchableOpacity
           style={styles.searchButton}
           onPress={() => this.props.searchShow(this.state.searchTerm)}
         >
-          <FontAwesome name="search" size={18} color="#000" />
+          <FontAwesome 
+            name="search" size={18} 
+            color="#000" 
+          />
         </TouchableOpacity>
       </View>
     );

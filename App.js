@@ -13,16 +13,46 @@ export default class App extends React.Component {
   }
 
   searchShow = (searchTerm) => {
-    let searchURL = urls.BASE_URL + urls.SEARCH_SHOW + searchTerm;
+    if (searchTerm === '') {
+      this.searchAllShows();
+    } else {
+      let searchURL = urls.BASE_URL + urls.SEARCH_SHOW + searchTerm;
+      fetch(searchURL, {
+        methods: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(response => {
+          response.json().then(data => {
+            let shows = [];
+            data.map((show) => {
+              shows.push(show.show);
+            });
+            this.setState({ shows })
+          });
+        }).catch((error) => console.log(error))
+    }
+  }
+
+  searchAllShows = () => {
+    let searchURL = urls.BASE_URL + urls.ALL_SHOWS;
     fetch(searchURL, {
-      methods: 'GET',
+      methods: "GET",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-    }).then((response) => {
-      response.json().then((data) => this.setState({ shows: data }));
-    }).catch((error) => console.log(error))
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => {
+        response.json().then(data => this.setState({ shows: data }));
+      })
+      .catch(error => console.log(error));
+  }
+
+  componentDidMount() {
+    this.searchAllShows();
   }
 
   render() {
