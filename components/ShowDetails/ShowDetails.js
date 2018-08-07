@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  AsyncStorage,
   Dimensions,
   Image,
   StyleSheet,
@@ -19,7 +20,8 @@ export default class ShowDetails extends React.Component {
     super(props);
     this.state = {
       seasons: [],
-      allEpisodes: []
+      allEpisodes: [],
+      favourite: false
     };
   }
 
@@ -76,8 +78,52 @@ export default class ShowDetails extends React.Component {
     }
   }
 
+  setFavorite = (show) => {
+    let favouriteShows = [];
+    if (this.state.favourite) {
+      AsyncStorage.getItem("favouriteShows").then(response => {
+        let storedShows = JSON.parse(response);
+        if(Array.isArray(storedShows)) {
+          favouriteShows = storedShows.filter(function(item) {
+            return item.id !== show.id;
+          });
+        }
+        AsyncStorage.setItem("favouriteShows", JSON.stringify(favouriteShows));
+      })
+    } else {
+      try {
+        AsyncStorage.getItem("favouriteShows").then(response => {
+          let storedShows = JSON.parse(response);
+          if (Array.isArray(storedShows)) {
+            favouriteShows = storedShows;
+            favouriteShows.push(show);
+            AsyncStorage.setItem("favouriteShows", JSON.stringify(favouriteShows));
+          } else {
+            favouriteShows.push(storedShows);
+            AsyncStorage.setItem("favouriteShows", JSON.stringify(favouriteShows));
+          }
+        });
+      } catch (error) {
+        console.log(error.message);
+      }  
+    }
+    this.setState({ favourite: !this.state.favourite });
+  }
   componentDidMount() {
-    this.allEpisodes(this.props.navigation.state.params.show.id);
+    let show = this.props.navigation.state.params.show;
+    this.allEpisodes(show.id);
+
+    let storedShows = [];
+    AsyncStorage.getItem("favouriteShows").then(response => {
+      storedShows = JSON.parse(response);
+      if (Array.isArray(storedShows)) {
+        storedShows.map(storedShow => {
+          if (storedShow.id === show.id) {
+            this.setState({favourite: true});
+          }
+        })
+      }
+    })
   }
 
   render() {
@@ -117,6 +163,12 @@ export default class ShowDetails extends React.Component {
             })
           }
         </ScrollView>
+        <View styles={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={() => this.setFavorite(show)}>
+            <FontAwesome name={this.state.favourite ? "heart" : "heart-o"} size={20} color="#000" />
+            <Text style={styles.buttonText}>Agregar a Favoritos</Text>
+          </TouchableOpacity>
+        </View>
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate("Home")}>

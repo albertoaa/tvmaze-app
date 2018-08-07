@@ -1,6 +1,6 @@
 import { FontAwesome } from "@expo/vector-icons";
 import React from "react";
-import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { AsyncStorage, Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 
 export default class ShowsList extends React.Component {
@@ -14,6 +14,12 @@ export default class ShowsList extends React.Component {
     if (show.image !== null) {
       return <Image style={styles.showImage} source={{ uri: show.image.medium }} />;
     }
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem("favouriteShows").then(response => {
+      console.log(JSON.parse(response));
+    });
   }
 
   render() {
