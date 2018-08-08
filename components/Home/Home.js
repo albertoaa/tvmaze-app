@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import SearchBar from '../SeachBar/SearchBar';
 import ShowsList from '../ShowsList/ShowsList';
+import NavigationBar from '../NavigationBar/NavigationBar';
 import * as urls from '../../constants/api';
 
 export default class Home extends React.Component {
@@ -68,6 +69,7 @@ export default class Home extends React.Component {
           shows={this.state.shows} 
           showDetails ={(show) => this.showDetails(show)} 
         />
+        <NavigationBar/>
       </View>
     );
   }
@@ -79,6 +81,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingVertical: 40
   },
 });
