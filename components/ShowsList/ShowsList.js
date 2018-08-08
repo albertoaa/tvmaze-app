@@ -6,8 +6,6 @@ import { AsyncStorage, Dimensions, Image, ScrollView, StyleSheet, Text, Touchabl
 export default class ShowsList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
   }
 
   renderImage = (show) => {

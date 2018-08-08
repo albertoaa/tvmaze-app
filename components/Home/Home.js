@@ -54,7 +54,7 @@ export default class Home extends React.Component {
   }
 
   showDetails = (show) => {
-    this.props.navigation.navigate("ShowDetails", {show});
+    this.props.navigation.navigate("ShowDetails", {show, back: "Home"});
   }
 
   componentDidMount() {
@@ -66,10 +66,10 @@ export default class Home extends React.Component {
       <View style={styles.container}>
         <SearchBar searchShow={(searchTerm) => this.searchShow(searchTerm)} />
         <ShowsList 
-          shows={this.state.shows} 
-          showDetails ={(show) => this.showDetails(show)} 
+          shows = {this.state.shows} 
+          showDetails = {(show) => this.showDetails(show)} 
         />
-        <NavigationBar/>
+        <NavigationBar navigation={this.props.navigation}/>
       </View>
     );
   }

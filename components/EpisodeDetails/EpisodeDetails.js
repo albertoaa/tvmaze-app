@@ -54,7 +54,7 @@ export default class EpisodeDetails extends React.Component {
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate(
                 "ShowDetails",
-                { show }
+                { show, back: "Home" }
               )}>
             <FontAwesome name="chevron-left" size={20} color="#000" />
             <Text style={styles.buttonText}>Atrás</Text>

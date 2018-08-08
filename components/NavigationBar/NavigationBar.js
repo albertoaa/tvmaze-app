@@ -10,7 +10,10 @@ export default class NavigationBar extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.navigationButton}>
+        <TouchableOpacity 
+          style={styles.navigationButton}
+          onPress={() => this.props.navigation.navigate("FavShows")}
+        >
           <FontAwesome name="heart-o" size={20} color="#000" />
           <Text style={{ textAlign: 'center' }}>Favourites{'\n'}Shows</Text>
         </TouchableOpacity>
@@ -22,7 +25,7 @@ export default class NavigationBar extends React.Component {
           <FontAwesome name="cog" size={20} color="#000" />
           <Text style={{ textAlign: 'center' }}>Configuración/{'\n'}Preferencias</Text>
         </TouchableOpacity>
-      </View>;
+      </View>
     ) 
   }
 }

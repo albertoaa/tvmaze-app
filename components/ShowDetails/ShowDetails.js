@@ -152,27 +152,45 @@ export default class ShowDetails extends React.Component {
               <TouchableOpacity 
                 key={episode.id} 
                 style={styles.episodeContainer}
-                  onPress={() => this.props.navigation.navigate("EpisodeDetails", { show, episode })}
+                onPress={() => this.props.navigation.navigate("EpisodeDetails", { show, episode })}
               >
                   <Text>
                     Temporada {episode.season} - E{episode.number}: {episode.name}
                   </Text>
-                  <FontAwesome name="chevron-right" size={20} color="#000" />
+                  <FontAwesome 
+                    name="chevron-right" 
+                    size={20} 
+                    color="#000" 
+                  />
                 </TouchableOpacity>
               );
             })
           }
         </ScrollView>
         <View styles={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => this.setFavorite(show)}>
-            <FontAwesome name={this.state.favourite ? "heart" : "heart-o"} size={20} color="#000" />
+          <TouchableOpacity 
+            style={styles.button} 
+            onPress={() => this.setFavorite(show)}
+          >
+            <FontAwesome 
+              name={this.state.favourite ? "heart" : "heart-o"} 
+              size={20} 
+              color="#000" 
+            />
             <Text style={styles.buttonText}>Agregar a Favoritos</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate("Home")}>
-            <FontAwesome name="chevron-left" size={20} color="#000" />
+        <TouchableOpacity 
+          style={styles.button} 
+          onPress={() => this.props.navigation.navigate(this.props.navigation.state.params.back)}
+        >
+            <FontAwesome 
+              name="chevron-left" 
+              size={20} 
+              color="#000" 
+            />
             <Text style={styles.buttonText}>Atrás</Text>
           </TouchableOpacity>
         </View>
@@ -210,7 +228,8 @@ const styles = StyleSheet.create({
     marginVertical: 20
   },
   buttonContainer: {
-    alignItems: "center"
+    alignItems: "center",
+    marginVertical: 10
   },
   button: {
     alignItems: "center",
